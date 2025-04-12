@@ -227,7 +227,7 @@ public class Storage {
     }
 
     public static void main(String[] args) {
-        // Đường dẫn đến file blockchain
+        // Đường dẫn đến file blockchain hehe
         String filePath = "blockchain.txt";
         
         // Đọc blockchain từ file
