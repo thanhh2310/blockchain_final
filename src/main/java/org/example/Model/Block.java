@@ -10,6 +10,8 @@ import java.security.MessageDigest;
 import java.time.LocalDate;
 import java.util.*;
 
+import static org.example.Storage.Storage.readFromFile;
+
 public class Block implements IBlock {
     private List<ITransaction> transaction;
     // private long timestamp;
@@ -20,6 +22,7 @@ public class Block implements IBlock {
     private String previousBlockHash;
     private IBlock nextBlock;
     private MerkleTree merkleTree = new MerkleTree();
+    private String merkleRootHash;
 
     public Block(int blockNumber) {
         this.blockNumber = blockNumber;
@@ -50,6 +53,9 @@ public class Block implements IBlock {
 
     @Override
     public String getMerkleRootHash() {
+        if (merkleRootHash != null && !merkleRootHash.isEmpty()) {
+            return merkleRootHash;
+        }
         // Xây dựng cây Merkle từ các giao dịch trong block
         buildMerkleTree();
 
@@ -141,65 +147,121 @@ public class Block implements IBlock {
         return blockNumber;
     }
 
-
     public boolean isValidChainDetailed(String prevBlockHash, boolean verbose,
-                                        List<IBlock> invalidBlocks,
-                                        Map<Integer, List<Map<String, String>>> invalidTransactions) {
+            List<IBlock> invalidBlocks,
+            Map<Integer, List<Map<String, String>>> invalidTransactions) {
         boolean isValid = true;
         boolean blockValid = true;
 
+//        // Xây dựng lại cây Merkle từ các giao dịch hiện tại
+//        buildMerkleTree();
+//
+//        // Kiểm tra các giao dịch trong block
+//        List<Map<String, String>> txnInfoList = new ArrayList<>();
+//
+//        for (ITransaction txn : transaction) {
+//            Transaction transaction = (Transaction) txn;
+//            String storedHash = transaction.caCalculateTransactionHash();
+//
+//            // So sánh các thông tin cụ thể để xác định thay đổi, bỏ qua timestamp và chữ ký
+//            String originalData = transaction.getUnitName() +
+//                    transaction.getCodeProduct() +
+//                    transaction.getNameProduct() +
+//                    transaction.getDateStart() +
+//                    transaction.getDateEnd();
+//
+//            // Tạo bản sao giữ nguyên dữ liệu gốc (không tạo timestamp mới)
+//            Transaction clonedTransaction = new Transaction(
+//                    transaction.getUnitName(),
+//                    transaction.getCodeProduct(),
+//                    transaction.getNameProduct(),
+//                    transaction.getDateStart(),
+//                    transaction.getDateEnd(),
+//                    transaction.getTimestamp() // Sử dụng timestamp gốc, cần thêm getter
+//            );
+//
+//            String clonedData = clonedTransaction.getUnitName() +
+//                    clonedTransaction.getCodeProduct() +
+//                    clonedTransaction.getNameProduct() +
+//                    clonedTransaction.getDateStart() +
+//                    clonedTransaction.getDateEnd();
+//
+//            // So sánh dữ liệu thô thay vì hash
+//            if (!originalData.equals(clonedData)) {
+//                blockValid = false;
+//
+//                // Lưu thông tin về giao dịch không hợp lệ
+//                Map<String, String> txnInfo = new HashMap<>();
+//                txnInfo.put("nameProduct", transaction.getNameProduct());
+//                txnInfo.put("codeProduct", transaction.getCodeProduct());
+//                txnInfo.put("unitName", transaction.getUnitName());
+//                txnInfo.put("dateStart", transaction.getDateStart().toString());
+//                txnInfo.put("dateEnd", transaction.getDateEnd().toString());
+//                txnInfo.put("storedHash", storedHash);
+//                txnInfo.put("calculatedHash", clonedTransaction.caCalculateTransactionHash());
+//
+//                txnInfoList.add(txnInfo);
+//            }
+//        }
+
+        // Kiểm tra hash của block
         // Xây dựng lại cây Merkle từ các giao dịch hiện tại
         buildMerkleTree();
+
+        // Đọc blockchain từ file
+        BlockChain fileBlockchain = org.example.Storage.Storage.readFromFile("blockchain.txt");
 
         // Kiểm tra các giao dịch trong block
         List<Map<String, String>> txnInfoList = new ArrayList<>();
 
-        for (ITransaction txn : transaction) {
-            Transaction transaction = (Transaction) txn;
-            String storedHash = transaction.caCalculateTransactionHash();
+        if (fileBlockchain != null) {
+            // Tìm block tương ứng trong file
+            Block fileBlock = null;
+            for (IBlock block : fileBlockchain.getBlocks()) {
+                if (block.getBlockNumber() == this.blockNumber) {
+                    fileBlock = (Block) block;
+                    break;
+                }
+            }
 
-            String originalData = transaction.getUnitName() + 
-                             transaction.getCodeProduct() + 
-                             transaction.getNameProduct() +
-                             transaction.getDateStart() +
-                             transaction.getDateEnd();
+            if (fileBlock != null) {
+                List<ITransaction> fileTransactions = fileBlock.getTransaction();
 
-            // Tạo bản sao của giao dịch để tính toán hash
-            Transaction clonedTransaction = new Transaction(
-                    transaction.getUnitName(),
-                    transaction.getCodeProduct(),
-                    transaction.getNameProduct(),
-                    transaction.getDateStart(),
-                    transaction.getDateEnd(),
-                    transaction.getTimestamp()
-            );
+                // So sánh từng giao dịch trong block hiện tại với giao dịch trong file
+                for (int i = 0; i < transaction.size() && i < fileTransactions.size(); i++) {
+                    Transaction memoryTxn = (Transaction) transaction.get(i);
+                    Transaction fileTxn = (Transaction) fileTransactions.get(i);
 
-            String clonedData = clonedTransaction.getUnitName() + 
-                           clonedTransaction.getCodeProduct() + 
-                           clonedTransaction.getNameProduct() +
-                           clonedTransaction.getDateStart() +
-                           clonedTransaction.getDateEnd();
+                    // So sánh các trường dữ liệu
+                    if (!memoryTxn.getUnitName().equals(fileTxn.getUnitName()) ||
+                            !memoryTxn.getCodeProduct().equals(fileTxn.getCodeProduct()) ||
+                            !memoryTxn.getNameProduct().equals(fileTxn.getNameProduct()) ||
+                            !memoryTxn.getDateStart().toString().equals(fileTxn.getDateStart().toString()) ||
+                            !memoryTxn.getDateEnd().toString().equals(fileTxn.getDateEnd().toString())) {
 
+                        blockValid = false;
 
-            // Nếu hash không khớp, giao dịch đã bị sửa đổi
-            if (!originalData.equals(clonedData)) {
-                blockValid = false;
+                        // Lưu thông tin về giao dịch đã thay đổi
+                        Map<String, String> txnInfo = new HashMap<>();
+                        txnInfo.put("unitNameFile", fileTxn.getUnitName());
+                        txnInfo.put("unitNameMemory", memoryTxn.getUnitName());
+                        txnInfo.put("codeProductFile", fileTxn.getCodeProduct());
+                        txnInfo.put("codeProductMemory", memoryTxn.getCodeProduct());
+                        txnInfo.put("nameProductFile", fileTxn.getNameProduct());
+                        txnInfo.put("nameProductMemory", memoryTxn.getNameProduct());
+                        txnInfo.put("dateStartFile", fileTxn.getDateStart().toString());
+                        txnInfo.put("dateStartMemory", memoryTxn.getDateStart().toString());
+                        txnInfo.put("dateEndFile", fileTxn.getDateEnd().toString());
+                        txnInfo.put("dateEndMemory", memoryTxn.getDateEnd().toString());
+                        txnInfo.put("hashFile", fileTxn.caCalculateTransactionHash());
+                        txnInfo.put("hashMemory", memoryTxn.caCalculateTransactionHash());
 
-                // Lưu thông tin về giao dịch không hợp lệ
-                Map<String, String> txnInfo = new HashMap<>();
-                txnInfo.put("nameProduct", transaction.getNameProduct());
-                txnInfo.put("codeProduct", transaction.getCodeProduct());
-                txnInfo.put("unitName", transaction.getUnitName());
-                txnInfo.put("dateStart", transaction.getDateStart().toString());
-                txnInfo.put("dateEnd", transaction.getDateEnd().toString());
-                txnInfo.put("storedHash", storedHash);
-                txnInfo.put("calculatedHash", clonedTransaction.caCalculateTransactionHash());
-
-                txnInfoList.add(txnInfo);
+                        txnInfoList.add(txnInfo);
+                    }
+                }
             }
         }
 
-        // Kiểm tra hash của block
         String newBlockHash = calculateBlockHash(prevBlockHash);
         if (!newBlockHash.equals(blockHash)) {
             blockValid = false;
@@ -215,9 +277,7 @@ public class Block implements IBlock {
         if (!blockValid) {
             isValid = false;
             invalidBlocks.add(this);
-            if (!txnInfoList.isEmpty()) {
-                invalidTransactions.put(blockNumber, txnInfoList);
-            }
+            invalidTransactions.put(blockNumber, txnInfoList);
         }
 
         if (verbose) {
@@ -230,7 +290,8 @@ public class Block implements IBlock {
 
         // Kiểm tra block tiếp theo
         if (nextBlock != null) {
-            boolean nextBlockValid = ((Block)nextBlock).isValidChainDetailed(newBlockHash, verbose, invalidBlocks, invalidTransactions);
+            boolean nextBlockValid = ((Block) nextBlock).isValidChainDetailed(newBlockHash, verbose, invalidBlocks,
+                    invalidTransactions);
             return isValid && nextBlockValid;
         }
 

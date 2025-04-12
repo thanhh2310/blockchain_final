@@ -104,6 +104,15 @@ public class Storage {
                 // Đọc thông tin Merkle Root
                 else if (readingBlockInfo && line.startsWith("MerkleRoot: ")) {
                     // Không cần xử lý riêng, vì Merkle Root sẽ được tính lại khi build block
+                    String merkleRoot = line.substring(12);
+                    // Lưu trữ giá trị merkleRoot vào block
+                    try {
+                        Field field = Block.class.getDeclaredField("merkleRootHash");
+                        field.setAccessible(true);
+                        field.set(currentBlock, merkleRoot);
+                    } catch (Exception e) {
+                        System.err.println("Không thể thiết lập Merkle Root: " + e.getMessage());
+                    }
                 }
                 // Đọc thông tin ngày tạo của block
                 else if (readingBlockInfo && line.startsWith("Ngày tạo: ")) {
@@ -214,6 +223,31 @@ public class Storage {
             System.err.println("Lỗi khi đọc blockchain từ file: " + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Đường dẫn đến file blockchain
+        String filePath = "blockchain.txt";
+        
+        // Đọc blockchain từ file
+        BlockChain blockchain = readFromFile(filePath);
+        
+        // Kiểm tra xem blockchain có được đọc thành công không
+        if (blockchain != null) {
+            System.out.println("Đọc blockchain thành công!");
+            System.out.println("Số lượng block: " + blockchain.getBlocks().size());
+            
+            // Hiển thị thông tin về các block
+            for (IBlock block : blockchain.getBlocks()) {
+                System.out.println("Block #" + block.getBlockNumber());
+                System.out.println("MerkleRoot: " + block.getMerkleRootHash());
+                System.out.println("Hash: " + block.getBlockHash());
+                System.out.println("Số lượng giao dịch: " + block.getTransaction().size());
+                System.out.println("--------------------");
+            }
+        } else {
+            System.out.println("Không thể đọc blockchain từ file: " + filePath);
         }
     }
 }

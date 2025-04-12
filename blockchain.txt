@@ -2,9 +2,9 @@ BLOCKCHAIN DATA:
 ======================
 
 Block #0
-MerkleRoot: 8D164B9ACD319DDA283DC23C551331D027CC45FAB3547784AAEC07906D228433
+MerkleRoot: 74238F4D1E57D422352ECD901543262C0122EBCB5D09D98FEE420388E013EF99
 Ngày tạo: 2025-04-12
-Hash: DMMJkTt+4yWtPfTFbdUZ73E6EokB5pIqHEWox2T3h1Q=
+Hash: X+4Hgu9laI2X0evbsgRtOO92FzH5TB9Wk3m9//5zU1I=
 Previous Hash: null (Genesis Block)
 
 Giao dịch trong block:
@@ -13,37 +13,37 @@ Giao dịch #1:
 Đơn vị sản xuất: a
 Mã sản phẩm: a
 Tên sản phẩm: a
-Ngày sản xuất: 2001-12-12
-Ngày hết hạn: 2003-12-12
-Hash giao dịch: 5rC4WuKuUaNZchDsx8t1vNzL0WCarMP0uVvWeMOQU7w=
-Chữ ký số: MEQCIFpSGdI0fTuP15YKkeS6HScgpgN/YpqsjtEan955pYXpAiAgAw0bRKUzdK1EhMNVau+4tcifhhOx9BSD3YU2ox1PSQ==
+Ngày sản xuất: 2000-11-11
+Ngày hết hạn: 2001-11-11
+Hash giao dịch: V6u+EtAuN/poa5AsURu8AWqT+6cpjkw2VRiREb/HNEw=
+Chữ ký số: MEQCIER7NsXyjbdy7xJEl7E0YVz6hMpI0MdSm+Mw1jK0aYpFAiB6mETeXBkV0Sw2N1y4eoZTcCcj7/fT/6/08R5M3u76HA==
 
 Giao dịch #2:
 Đơn vị sản xuất: s
 Mã sản phẩm: s
 Tên sản phẩm: s
-Ngày sản xuất: 2000-12-13
-Ngày hết hạn: 2001-12-13
-Hash giao dịch: I6ivNtrwwdXJHDjAMB4eABJyszBvZbkskgdiq2H2TWA=
-Chữ ký số: MEQCID/7hDfSkmXssWdwhEia6f3Zlr6c/5ATUmAkjZvVHeNwAiAYPErbJbd3JZ2F2gYwW1FgTtghQzNueu1h1Qj4wAqBlA==
+Ngày sản xuất: 2000-12-12
+Ngày hết hạn: 2001-12-12
+Hash giao dịch: hDFk81V6DSN76b2foUkFCOfhcWXFja3O6Q6thDZlzBI=
+Chữ ký số: MEUCIFDp8AYTNw9/hkEaNwPnJzQPBNyNNxEMNw75PzXeE9crAiEAueozvqpfl/THXG75Pj2KWmXMEnM9VKJfzzm4gKVLU3Q=
 
 Giao dịch #3:
 Đơn vị sản xuất: d
 Mã sản phẩm: d
 Tên sản phẩm: d
-Ngày sản xuất: 2003-11-11
-Ngày hết hạn: 2004-11-11
-Hash giao dịch: yQ/7N/mqAaoavmNe8GvAZx9DmyBXfqf5bIa6P6VuuWo=
-Chữ ký số: MEUCIEf8NMdGXhhX+zSmMA7t9MHKFqGALVfQAldjDLvYXdqjAiEAgcrsSLJ9ntc9Z/s6Wbn70S3W1ZBHsifYL73YnmDsTOM=
+Ngày sản xuất: 2003-12-12
+Ngày hết hạn: 2004-12-12
+Hash giao dịch: VTBSLpEeG59C0BBKmufrYGrjDXt3hE/UrXHoPu2APbE=
+Chữ ký số: MEUCIQCug3tP+EYN2NbRuUAf1mEILYGGq+acNsuAKR3GdrJkEQIgBBXYFntVmMHY3Te+WhSLr9s42IMF0UCQE1qTgvMeXcc=
 
 Giao dịch #4:
 Đơn vị sản xuất: f
-Mã sản phẩm: g
+Mã sản phẩm: f
 Tên sản phẩm: f
-Ngày sản xuất: 2001-11-14
-Ngày hết hạn: 2006-11-14
-Hash giao dịch: k8W3/KL9YXB+eOE+f3q513ho3dYsMk6aT4MVRlXuwCI=
-Chữ ký số: MEUCIGQF9gl9vhMeaUm1CY28lYDe2eGAqqRxNk+nITE53EfRAiEA8GbmuwmzgH3Follk3+VE0EEEWQ4Kv32lzI1TD988ntw=
+Ngày sản xuất: 2009-11-11
+Ngày hết hạn: 2010-11-11
+Hash giao dịch: 9NqPZ3oc5SazIBfSaQM2p2jogV3ed+dr13yp4SAzSAw=
+Chữ ký số: MEQCIHgrH3lXLM+GuHNzrjbjVbym/ZI+mY4d104xPEZET01dAiAFFrpvdTR1nEtIOdltH1dl0Z9J9UuPZlEqF/zcE0fHrA==
 
 ======================
 

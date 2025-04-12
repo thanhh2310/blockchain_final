@@ -86,10 +86,16 @@ public class BlockChain implements IBlockChain {
                 if (txnInfoList != null && !txnInfoList.isEmpty()) {
                     System.out.println("\nCác giao dịch bị sửa đổi trong block này:");
                     for (Map<String, String> txnInfo : txnInfoList) {
-                        System.out.println("  Tên sản phẩm: " + txnInfo.get("nameProduct"));
-                        System.out.println("  Mã sản phẩm: " + txnInfo.get("codeProduct"));
-                        System.out.println("  Hash giao dịch đã lưu: " + txnInfo.get("storedHash"));
-                        System.out.println("  Hash giao dịch tính toán lại: " + txnInfo.get("calculatedHash"));
+                        System.out.println("  Đơn vị sản xuất: Từ " + txnInfo.get("unitNameFile") + 
+                          " thành " + txnInfo.get("unitNameMemory"));
+                        System.out.println("  Mã sản phẩm: Từ " + txnInfo.get("codeProductFile") + 
+                          " thành " + txnInfo.get("codeProductMemory"));
+                        System.out.println("  Tên sản phẩm: Từ " + txnInfo.get("nameProductFile") + 
+                          " thành " + txnInfo.get("nameProductMemory"));
+                        System.out.println("  Ngày sản xuất: Từ " + txnInfo.get("dateStartFile") + 
+                          " thành " + txnInfo.get("dateStartMemory"));
+                        System.out.println("  Ngày hết hạn: Từ " + txnInfo.get("dateEndFile") + 
+                          " thành " + txnInfo.get("dateEndMemory"));
                         System.out.println();
                     }
                 }

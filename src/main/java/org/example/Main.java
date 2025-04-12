@@ -197,60 +197,63 @@ public class Main {
         }
     }
 
-    private static void verifyBlockchain(BlockChain blockchain) {
-        if (blockchain.getHeadBlock() == null) {
-            System.out.println("Blockchain trống. Không có gì để xác minh.");
-            return;
-        }
-    
-        System.out.println("\n=== Xác Minh Tính Toàn Vẹn Của Blockchain ===");
-    
-        try {
-            // Chuẩn bị các cấu trúc dữ liệu để lưu trữ thông tin về block và giao dịch không hợp lệ
-            List<IBlock> invalidBlocks = new ArrayList<>();
-            Map<Integer, List<Map<String, String>>> invalidTransactions = new HashMap<>();
-            
-            // Gọi phương thức verifyChainDetailed đã thêm vào lớp BlockChain
-            boolean isValid = blockchain.verifyChainDetailed(null, true, invalidBlocks, invalidTransactions);
-            
-            if (isValid) {
-                System.out.println("Blockchain integrity intact - Chuỗi khối hoàn toàn nguyên vẹn.");
-            } else {
-                System.out.println("Blockchain integrity NOT intact - Chuỗi khối đã bị sửa đổi!");
+        private static void verifyBlockchain(BlockChain blockchain) {
+            if (blockchain.getHeadBlock() == null) {
+                System.out.println("Blockchain trống. Không có gì để xác minh.");
+                return;
+            }
+        
+            System.out.println("\n=== Xác Minh Tính Toàn Vẹn Của Blockchain ===");
+        
+            try {
+                // Chuẩn bị các cấu trúc dữ liệu để lưu trữ thông tin về block và giao dịch không hợp lệ
+                List<IBlock> invalidBlocks = new ArrayList<>();
+                Map<Integer, List<Map<String, String>>> invalidTransactions = new HashMap<>();
                 
-                // Hiển thị thông tin chi tiết về các block và giao dịch bị sửa đổi
-                System.out.println("\nChi tiết về các block và giao dịch bị sửa đổi:");
+                // Gọi phương thức verifyChainDetailed đã thêm vào lớp BlockChain
+                boolean isValid = blockchain.verifyChainDetailed(null, true, invalidBlocks, invalidTransactions);
                 
-                for (IBlock iblock : invalidBlocks) {
-                    Block block = (Block) iblock;
-                    System.out.println("\n--- Block #" + block.getBlockNumber() + " bị sửa đổi ---");
-                    System.out.println("Ngày tạo: " + block.getCreatedDate());
-                    System.out.println("Hash hiện tại: " + block.getBlockHash());
-                    System.out.println("Hash tính toán lại: " + block.calculateBlockHash(block.getPreviousBlockHash()));
+                if (isValid) {
+                    System.out.println("Blockchain integrity intact - Chuỗi khối hoàn toàn nguyên vẹn.");
+                } else {
+                    System.out.println("Blockchain integrity NOT intact - Chuỗi khối đã bị sửa đổi!");
                     
-                    // Hiển thị các giao dịch bị sửa đổi trong block
-                    List<Map<String, String>> txnInfoList = invalidTransactions.get(block.getBlockNumber());
-                    if (txnInfoList != null && !txnInfoList.isEmpty()) {
-                        System.out.println("\nCác giao dịch bị sửa đổi trong block này:");
-                        for (Map<String, String> txnInfo : txnInfoList) {
-                            System.out.println("  Đơn vị sản xuất: " + txnInfo.get("unitName"));
-                            System.out.println("  Mã sản phẩm: " + txnInfo.get("codeProduct"));
-                            System.out.println("  Tên sản phẩm: " + txnInfo.get("nameProduct"));
-                            System.out.println("  Ngày sản xuất: " + txnInfo.get("dateStart"));
-                            System.out.println("  Ngày hết hạn: " + txnInfo.get("dateEnd"));
-                            System.out.println("  Hash giao dịch đã lưu: " + txnInfo.get("storedHash"));
-                            System.out.println("  Hash giao dịch tính toán lại: " + txnInfo.get("calculatedHash"));
-                            System.out.println();
+                    // Hiển thị thông tin chi tiết về các block và giao dịch bị sửa đổi
+                    System.out.println("\nChi tiết về các block và giao dịch bị sửa đổi:");
+                    
+                    for (IBlock iblock : invalidBlocks) {
+                        Block block = (Block) iblock;
+                        System.out.println("\n--- Block #" + block.getBlockNumber() + " bị sửa đổi ---");
+                        System.out.println("Ngày tạo: " + block.getCreatedDate());
+                        System.out.println("Hash hiện tại: " + block.getBlockHash());
+                        System.out.println("Hash tính toán lại: " + block.calculateBlockHash(block.getPreviousBlockHash()));
+                        
+                        // Hiển thị các giao dịch bị sửa đổi trong block
+                        List<Map<String, String>> txnInfoList = invalidTransactions.get(block.getBlockNumber());
+                        if (txnInfoList != null && !txnInfoList.isEmpty()) {
+                            System.out.println("\nCác giao dịch bị sửa đổi trong block này:");
+                            for (Map<String, String> txnInfo : txnInfoList) {
+                                System.out.println("  Đơn vị sản xuất: Từ " + txnInfo.get("unitNameFile") + 
+                                " thành " + txnInfo.get("unitNameMemory"));
+                                System.out.println("  Mã sản phẩm: Từ " + txnInfo.get("codeProductFile") + 
+                                " thành " + txnInfo.get("codeProductMemory"));
+                                System.out.println("  Tên sản phẩm: Từ " + txnInfo.get("nameProductFile") + 
+                                " thành " + txnInfo.get("nameProductMemory"));
+                                System.out.println("  Ngày sản xuất: Từ " + txnInfo.get("dateStartFile") + 
+                                " thành " + txnInfo.get("dateStartMemory"));
+                                System.out.println("  Ngày hết hạn: Từ " + txnInfo.get("dateEndFile") + 
+                                " thành " + txnInfo.get("dateEndMemory"));
+                                System.out.println();
+                            }
+                        } else {
+                            System.out.println("Không có giao dịch cụ thể bị sửa đổi, nhưng cấu trúc block đã thay đổi.");
                         }
-                    } else {
-                        System.out.println("Không có giao dịch cụ thể bị sửa đổi, nhưng cấu trúc block đã thay đổi.");
                     }
                 }
+            } catch (IllegalStateException e) {
+                System.out.println("Lỗi: " + e.getMessage());
             }
-        } catch (IllegalStateException e) {
-            System.out.println("Lỗi: " + e.getMessage());
         }
-    }
 
     private static void saveBlockchain(BlockChain blockchain, Scanner scanner) {
         if (blockchain.getHeadBlock() == null) {
