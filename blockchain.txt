@@ -1,0 +1,50 @@
+BLOCKCHAIN DATA:
+======================
+
+Block #0
+MerkleRoot: 8D164B9ACD319DDA283DC23C551331D027CC45FAB3547784AAEC07906D228433
+Ngày tạo: 2025-04-12
+Hash: DMMJkTt+4yWtPfTFbdUZ73E6EokB5pIqHEWox2T3h1Q=
+Previous Hash: null (Genesis Block)
+
+Giao dịch trong block:
+
+Giao dịch #1:
+Đơn vị sản xuất: a
+Mã sản phẩm: a
+Tên sản phẩm: a
+Ngày sản xuất: 2001-12-12
+Ngày hết hạn: 2003-12-12
+Hash giao dịch: 5rC4WuKuUaNZchDsx8t1vNzL0WCarMP0uVvWeMOQU7w=
+Chữ ký số: MEQCIFpSGdI0fTuP15YKkeS6HScgpgN/YpqsjtEan955pYXpAiAgAw0bRKUzdK1EhMNVau+4tcifhhOx9BSD3YU2ox1PSQ==
+
+Giao dịch #2:
+Đơn vị sản xuất: s
+Mã sản phẩm: s
+Tên sản phẩm: s
+Ngày sản xuất: 2000-12-13
+Ngày hết hạn: 2001-12-13
+Hash giao dịch: I6ivNtrwwdXJHDjAMB4eABJyszBvZbkskgdiq2H2TWA=
+Chữ ký số: MEQCID/7hDfSkmXssWdwhEia6f3Zlr6c/5ATUmAkjZvVHeNwAiAYPErbJbd3JZ2F2gYwW1FgTtghQzNueu1h1Qj4wAqBlA==
+
+Giao dịch #3:
+Đơn vị sản xuất: d
+Mã sản phẩm: d
+Tên sản phẩm: d
+Ngày sản xuất: 2003-11-11
+Ngày hết hạn: 2004-11-11
+Hash giao dịch: yQ/7N/mqAaoavmNe8GvAZx9DmyBXfqf5bIa6P6VuuWo=
+Chữ ký số: MEUCIEf8NMdGXhhX+zSmMA7t9MHKFqGALVfQAldjDLvYXdqjAiEAgcrsSLJ9ntc9Z/s6Wbn70S3W1ZBHsifYL73YnmDsTOM=
+
+Giao dịch #4:
+Đơn vị sản xuất: f
+Mã sản phẩm: g
+Tên sản phẩm: f
+Ngày sản xuất: 2001-11-14
+Ngày hết hạn: 2006-11-14
+Hash giao dịch: k8W3/KL9YXB+eOE+f3q513ho3dYsMk6aT4MVRlXuwCI=
+Chữ ký số: MEUCIGQF9gl9vhMeaUm1CY28lYDe2eGAqqRxNk+nITE53EfRAiEA8GbmuwmzgH3Follk3+VE0EEEWQ4Kv32lzI1TD988ntw=
+
+======================
+
+End of Blockchain
